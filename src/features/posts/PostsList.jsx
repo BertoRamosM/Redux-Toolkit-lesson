@@ -1,11 +1,19 @@
 import { useSelector } from "react-redux";
 import { selectAllPosts } from "./postsSlice";
+import { useDispatch } from "react-redux";
+import { postDelete } from "./postsSlice";
+import PostAuthor from "./PostAuthor";
 
 const PostsList = () => {
+  const dispatch = useDispatch()
   const posts = useSelector(selectAllPosts)
+
   const renderedPosts = posts.map(post => (
-    <article key={post.id}>
+    <article key={post.id} style={{position: 'relative'}}>
       <h3>{post.title}</h3>
+     <PostAuthor />
+      <button style={{ position: "absolute", right: 5, top: 5, color: 'red', backgroundColor: 'white'}}
+      onClick={()=> dispatch(postDelete(post.id))}>X</button>
       <p>{post.content.substring(0, 100)}</p>
     </article>
   ))
