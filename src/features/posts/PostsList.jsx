@@ -3,22 +3,35 @@ import { selectAllPosts } from "./postsSlice";
 import { useDispatch } from "react-redux";
 import { postDelete } from "./postsSlice";
 import PostAuthor from "./PostAuthor";
+import TimeAgo from "./TimeAgo";
 
 const PostsList = () => {
   const dispatch = useDispatch()
   const posts = useSelector(selectAllPosts)
 
-  const renderedPosts = posts.map(post => (
-    <article key={post.id} style={{position: 'relative'}}>
+  const renderedPosts = posts.map((post) => (
+    <article key={post.id} style={{ position: "relative" }}>
       <h3>{post.title}</h3>
       <p className="postCredit">
         <PostAuthor userId={post.userId} />
-     </p>
-      <button style={{ position: "absolute", right: 5, top: 5, color: 'red', backgroundColor: 'white'}}
-      onClick={()=> dispatch(postDelete(post.id))}>X</button>
+      </p>
+
+      <button
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 5,
+          color: "red",
+          backgroundColor: "white",
+        }}
+        onClick={() => dispatch(postDelete(post.id))}
+      >
+        X
+      </button>
       <p>{post.content.substring(0, 100)}</p>
+      <TimeAgo timestamp={post.date} />
     </article>
-  ))
+  ));
   
 
   return (
