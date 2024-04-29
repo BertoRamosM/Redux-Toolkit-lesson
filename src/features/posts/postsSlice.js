@@ -20,8 +20,17 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    
+    postAdded(state, action) {
+      return state.push(action.payload)
+    }, 
+    postDelete(state, action) {
+      return state.filter(item => item != action.payload)
+    }
   }
 })
+
+export const selectAllPosts = (state)=> state.posts
+
+export const {postAdded, postDelete} = postsSlice.actions
 
 export default postsSlice.reducer
